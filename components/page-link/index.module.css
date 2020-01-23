@@ -1,0 +1,7 @@
+.pageLink {
+  margin-right: 10px;
+}
+
+.pageLink:last-child {
+  margin-right: 0;
+}

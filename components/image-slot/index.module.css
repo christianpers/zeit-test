@@ -1,0 +1,8 @@
+.imageSlot {
+  width: 80vw;
+}
+
+.imageSlot > img {
+  width: 100%;
+  object-fit: contain;
+}

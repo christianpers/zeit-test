@@ -1,0 +1,14 @@
+/* media queries */
+:root {
+  --color-black: #222;
+  --small: "(max-width: 500px)";
+  --big: "(min-width: 1921px)";
+
+  /* Typography */
+  --font-regular: "Helvetica Neue", sans-serif;
+
+  /* Colors */
+  --white: #fff;
+  --black: #000;
+  --red: #ee2e43;
+}

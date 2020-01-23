@@ -1,0 +1,73 @@
+version: 2
+
+jobs:
+  prepare:
+    docker:
+      - image: circleci/node:12.10.0
+    working_directory: ~/radon
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/radon
+      - restore_cache:
+          key: yarn-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: install dependencies
+          command: yarn install
+      - save_cache:
+          key: yarn-dependencies-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  # test:
+  #   docker:
+  #     - image: circleci/node:12.10.0
+  #   working_directory: ~/radon
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/radon
+  #     - run:
+  #         name: test
+  #         command: yarn test --coverage --maxWorkers=2
+
+  eslint:
+    docker:
+      - image: circleci/node:12.10.0
+    working_directory: ~/radon
+    steps:
+      - attach_workspace:
+          at: ~/radon
+      - run:
+          name: ESLint
+          command: yarn eslint
+
+  stylelint:
+    docker:
+      - image: circleci/node:12.10.0
+    working_directory: ~/radon
+    steps:
+      - attach_workspace:
+          at: ~/radon
+      - run:
+          name: Stylelint
+          command: yarn stylelint
+
+workflows:
+  version: 2
+  validate:
+    jobs:
+      - prepare
+      # - test:
+      #     requires:
+      #       - prepare
+      - eslint:
+          requires:
+            - prepare
+      - stylelint:
+          requires:
+            - prepare
