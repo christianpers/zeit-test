@@ -18,8 +18,6 @@ interface Props {
 const Home: NextPage<Props> = (props: Props) => {
   const { resp: { title, header, body } } = props;
 
-  console.log('this is prod');
-
   return (
     <Page
       metaData={{ title: 'Radon - NextJS Template', description: 'Start using NextJS now!' }}
